@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resultsheet - Marksheet generator</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -23,51 +24,109 @@
                 <div class="row">
                     <label for="bangla">Bangla</label>
                     <div class="marks-box">
-                        <input type="text" placeholder="Number you got" />
+                        <input id="banglaMarks" type="text" placeholder="Number you got" />
                     </div>
                     <div class="action-box">
-                        <button>Calculate</button>
+                        <button id="banglaBtn">Calculate</button>
                     </div>
                     <div class="grade-box">
-                        <p>F</p>
+                        <p id="banglaGrade">F</p>
                     </div>
                 </div>
 
                 <div class="row">
                     <label for="english">English</label>
                     <div class="marks-box">
-                        <input type="text" placeholder="Number you got" />
+                        <input id="englishMarks" type="text" placeholder="Number you got" />
                     </div>
                     <div class="action-box">
-                        <button>Calculate</button>
+                        <button id="englishBtn">Calculate</button>
                     </div>
                     <div class="grade-box">
-                        <p>F</p>
+                        <p id="englishGrade">F</p>
                     </div>
                 </div>
                 <div class="row">
                     <label for="ict">ICT</label>
                     <div class="marks-box">
-                        <input type="text" placeholder="Number you got" />
+                        <input id="ictMarks" type="text" placeholder="Number you got" />
                     </div>
                     <div class="action-box">
-                        <button>Calculate</button>
+                        <button id="ictBtn">Calculate</button>
                     </div>
                     <div class="grade-box">
-                        <p>F</p>
+                        <p id="ictGrade">F</p>
                     </div>
                 </div>
             </div>
             <div class="footer">
-                <p>Total Mark: <strong>00</strong></p>
+                <p>Total Mark: <strong id="totalMarks">00</strong></p>
                 <div class="action-box">
-                    <button>Calculate</button>
+                    <button id="totalBtn">Calculate</button>
                 </div>
-
-                <p>Final Grade: <strong>F</strong></p>
+                <p>Final Grade: <strong id="totalGrade">F</strong></p>
             </div>
         </div>
     </div>
+
+
+
+
+
+    <script>
+        document.getElementById("banglaBtn").addEventListener("click", function() {
+            var banglaMarks = parseFloat(document.getElementById("banglaMarks").value);
+
+            calculateGrade("banglaGrade", banglaMarks);
+        })
+
+        document.getElementById("englishBtn").addEventListener("click", function() {
+            var englishMarks = parseFloat(document.getElementById("englishMarks").value);
+
+            calculateGrade("englishGrade", englishMarks);
+
+        })
+
+        document.getElementById("ictBtn").addEventListener("click", function() {
+            var ictMarks = parseFloat(document.getElementById("ictMarks").value);
+
+            calculateGrade("ictGrade", ictMarks);
+
+        })
+
+        document.getElementById("totalBtn").addEventListener("click", function() {
+
+            const finalMarks = parseFloat(document.getElementById("totalMarks").innerText) + parseFloat(document.getElementById("banglaMarks").value) + parseFloat(document.getElementById("englishMarks").value) + parseFloat(document.getElementById("ictMarks").value);
+            const avgMarks = Math.round(finalMarks / 3);
+            console.log(avgMarks);
+
+            calculateGrade("totalGrade", avgMarks);
+            totalMarks.innerHTML = avgMarks;
+        })
+
+
+
+        function calculateGrade(id, num) {
+
+            if (num < 0) {
+                document.getElementById(id).innerHTML = false;
+            } else if (num >= 80) {
+                document.getElementById(id).innerHTML = "A+";
+            } else if (num >= 70 && num < 80) {
+                document.getElementById(id).innerHTML = "A";
+            } else if (num < 70 && num >= 60) {
+                document.getElementById(id).innerHTML = "A-";
+            } else if (num < 60 && num >= 50) {
+                document.getElementById(id).innerHTML = "B";
+            } else if (num < 50 && num >= 40) {
+                document.getElementById(id).innerHTML = "C";
+            } else if (num < 40 && num >= 30) {
+                document.getElementById(id).innerHTML = "D";
+            } else {
+                document.getElementById(id).innerHTML = "F";
+            }
+        }
+    </script>
 </body>
 
 </html>
